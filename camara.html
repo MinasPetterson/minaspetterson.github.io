@@ -26,38 +26,25 @@
       cursor: pointer;
     }
     button:active { opacity: 0.9; }
-    .status { margin-top: 20px; font-size: 14px; opacity: 0.7; }
   </style>
 </head>
 <body>
   <h2>🌡️ Câmara Fria</h2>
   
-  <button onclick="sendCmd('temp')">📊 Ver Temperatura</button>
-  <button onclick="sendCmd('ledon')">💡 Ligar LED</button>
-  <button onclick="sendCmd('ledoff')">⚫ Desligar LED</button>
-  <button onclick="sendCmd('ledstatus')">🔍 Status do LED</button>
+  <button onclick="runCmd('/temp')">📊 Ver Temperatura</button>
+  <button onclick="runCmd('/ledon')">💡 Ligar LED</button>
+  <button onclick="runCmd('/ledoff')">⚫ Desligar LED</button>
+  <button onclick="runCmd('/ledstatus')">🔍 Status do LED</button>
   
-  <div class="status" id="status">Aguardando ação...</div>
-
   <script>
     const tg = window.Telegram.WebApp;
-    tg.expand(); // Tela cheia
-    tg.enableClosingConfirmation(); // Confirma antes de fechar
-
-    function sendCmd(cmd) {
-      document.getElementById('status').innerText = 'Enviando...';
-      
-      // Envia dado estruturado para o bot
-      tg.sendData(JSON.stringify({ command: cmd }));
-      
-      // Opcional: fecha o Mini App após enviar
-      // tg.close();
-    }
+    tg.expand();
     
-    // Feedback visual ao carregar
-    window.addEventListener('load', () => {
-      document.getElementById('status').innerText = 'Conectado ao bot ✓';
-    });
+    function runCmd(cmd) {
+      // Envia o comando como se fosse digitado
+      tg.sendData(JSON.stringify({ command: cmd }));
+      // O Mini App fecha automaticamente após sendData()
+    }
   </script>
 </body>
 </html>
